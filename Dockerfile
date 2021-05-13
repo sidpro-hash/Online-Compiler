@@ -1,5 +1,5 @@
 #Download base image ubuntu 18.04
-FROM ubuntu:latest
+FROM ubuntu:18.04
 
 # LABEL about the custom image
 LABEL maintainer="Gabu Siddharth"
