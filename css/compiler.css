@@ -59,6 +59,27 @@ h1{
   margin-bottom: 15px;
   color: #738f93;
 }
+/* Upload & Download */
+
+.download-btn{
+  background-color: #738f93; /* Blue */
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+
+}
+
+.download-btn:hover {
+  background-color: #008CBA; /* Green */
+  color: white;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  cursor:pointer;
+}
+/*  Upload & Download */
 select{
   padding: 1px 1px 1px 20px;
   width: 180px;

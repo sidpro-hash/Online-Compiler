@@ -124,6 +124,56 @@ function setupEditor() {
 	xmlhttp.send(formData);
 
   }
+  var file = {};
+  file["cpp"] = "cpp";
+  file["java"] = "java";
+  file["c"] = "c";
+  file["javascript"] = "js";
+  file["python3"] = "py";
+  function download() {
+	let x = document.getElementById('modes');
+	let lang = x.options[x.selectedIndex].text;
+      var filename = "Main." + file[lang];
+      var text = editor.getValue();
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+    
+  function upload(){
+      var element = document.createElement('input');
+      element.setAttribute('type', 'file');
+      element.setAttribute('id', 'file_1');
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      let file_1 = document.getElementById('file_1');
+      file_1.addEventListener('change', (event) => {
+    	const fileList = event.target.files;
+    	//console.log(fileList);
+    	//console.log(fileList[0].name);
+    	let type = fileList[0].name;
+       let x = document.getElementById('modes');
+	let lang = x.options[x.selectedIndex].text;
+    	var patt = new RegExp("\."+file[lang]);
+    	//console.log(patt);
+    	if(patt.test(type)){
+    		let reader = new FileReader();
+  		reader.readAsText(fileList[0]);
+  		reader.onload = function() {
+    			//console.log(reader.result);
+    			editor.setValue(reader.result,1);
+  		};
+    	}
+    	else alert("Unappropriate file !!! file must have ."+file[lang]+" extension");
+  	},document.body.removeChild(element));
+      
+  	
+  }
   // var cpp = new EditSession(language["cpp"]);
   // var html = new EditSession(language["html"]);
     // $('#modes').on('change', function (ev) {

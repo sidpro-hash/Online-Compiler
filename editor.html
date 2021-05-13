@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Live Editor</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-language_tools.min.js"></script>
+    <style>
+      html,body{
+        margin: 0;
+        padding:0;
+        height:100%;
+        width: 100%;
+      }
+      #editor{
+        width: 50%;
+        height: 94.5%;
+        display: inline-block;
+      }
+      #ifrm{
+        width: 50%;
+        height: 94.5%;
+        float: right;
+        overflow: auto;
+        display: inline-block;
+      }
+      .nav{
+        height: 5%;
+        width: 100%;
+        background: rgb(36,32,30);
+        background: linear-gradient(180deg, rgba(36,32,30,1) 0%, rgba(92,161,16,0.5858543246400123) 100%);
+      }
+      select{
+        padding: 1px 1px 1px 1px;
+        width: 200px;
+        height: 100%;
+        background-color:#1F2833;
+        color:#45A29E;
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 14px;
+        border-radius: 5px;
+      }
+      label{
+        margin-left: 5px;
+        color:white;
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 14px;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: -6px;
+        left: 40px;
+        right: -40px;
+        bottom: 6px;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      input:checked + .slider {
+        background: rgb(36,32,30);
+        background: linear-gradient(180deg, rgba(36,32,30,1) 0%, rgba(92,161,16,0.5858543246400123) 100%);
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px rgb(36,32,30);
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+      }
+      .btn {
+        background-color: DodgerBlue;
+        border: none;
+        color: white;
+        padding: 4px 10px;
+        height: 100%;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      /* Darker background on mouse-over */
+      .btn:hover {
+        background-color: RoyalBlue;
+      }
+    </style>
+  </head>
+  <body onload="ready()">
+    <div class="nav">
+      <label for="theme">Theme :</label>
+      <select id="theme" size="1">
+        <option value="ace/theme/ambiance">Ambiance</option>
+        <option value="ace/theme/chaos">Chaos</option>
+        <option value="ace/theme/chrome">Chrome</option>
+        <option value="ace/theme/clouds">Clouds</option>
+        <option value="ace/theme/clouds_midnight">Clouds Midnight</option>
+        <option value="ace/theme/cobalt">Cobalt</option>
+        <option value="ace/theme/crimson_editor">Crimson Editor</option>
+        <option value="ace/theme/dracula">Dracula</option>
+        <option value="ace/theme/dreamweaver">Dreamweaver</option>
+        <option value="ace/theme/eclipse">Eclipse</option>
+        <option value="ace/theme/github">Github</option>
+        <option value="ace/theme/gob">Gob</option>
+        <option value="ace/theme/gruvbox">Gruvbox</option>
+        <option value="ace/theme/idle_fingers">Idle Fingers</option>
+        <option value="ace/theme/iplastic">Iplastic</option>
+        <option value="ace/theme/katzenmilch">Katzenmilch</option>
+        <option value="ace/theme/kr_theme">Kr Theme</option>
+        <option value="ace/theme/kuroir">Kuroir</option>
+        <option value="ace/theme/merbivore">Merbivore</option>
+        <option value="ace/theme/merbivore_soft">Merbivore Soft</option>
+        <option value="ace/theme/mono_industrial">Mono Industrial</option>
+        <option value="ace/theme/monokai" selected>Monokai</option>
+        <option value="ace/theme/nord_dark">Nord Dark</option>
+        <option value="ace/theme/pastel_on_dark">Pastel on Dark</option>
+        <option value="ace/theme/solarized_light">Solarized light</option>
+        <option value="ace/theme/solarized_dark">Solarized Dark</option>
+        <option value="ace/theme/sqlserver">Sqlserver</option>
+        <option value="ace/theme/terminal">Terminal</option>
+        <option value="ace/theme/textmate">Textmate</option>
+        <option value="ace/theme/tomorrow">Tomorrow</option>
+        <option value="ace/theme/tomorrow_night">Tomorrow Night</option>
+        <option value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue</option>
+        <option value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright</option>
+        <option value="ace/theme/tomorrow_night_eighties">Tomorrow Night Eighties</option>
+        <option value="ace/theme/twilight">Twilight</option>
+        <option value="ace/theme/vibrant_ink">Vibrant Ink</option>
+        <option value="ace/theme/xcode">Xcode</option>
+      </select>
+       <button type="button" onclick="update();" class="btn"><i style="color:white" class="fas fa-play"></i> Run</button>
+      <label class="switch"><b>Auto</b>
+        <input id="check" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+      <!-- <select id="mode" size="1" style="display:block;">
+        <option value="ace/mode/abap">abap</option>
+        <option value="ace/mode/actionscript">actionscript</option>
+        <option value="ace/mode/ada">ada</option>
+        <option value="ace/mode/asciidoc">asciidoc</option>
+        <option value="ace/mode/assembly_x86">assembly_x86</option>
+        <option value="ace/mode/autohotkey">autohotkey</option>
+        <option value="ace/mode/batchfile">batchfile</option>
+        <option value="ace/mode/c9search">c9search</option>
+        <option value="ace/mode/c_cpp">c_cpp</option>
+        <option value="ace/mode/clojure">clojure</option>
+        <option value="ace/mode/cobol">cobol</option>
+        <option value="ace/mode/coffee">coffee</option>
+        <option value="ace/mode/coldfusion">coldfusion</option>
+        <option value="ace/mode/csharp">csharp</option>
+        <option value="ace/mode/css">css</option>
+        <option value="ace/mode/curly">curly</option>
+        <option value="ace/mode/d">d</option>
+        <option value="ace/mode/dart">dart</option>
+        <option value="ace/mode/diff">diff</option>
+        <option value="ace/mode/django">django</option>
+        <option value="ace/mode/dot">dot</option>
+        <option value="ace/mode/ejs">ejs</option>
+        <option value="ace/mode/erlang">erlang</option>
+        <option value="ace/mode/forth">forth</option>
+        <option value="ace/mode/ftl">ftl</option>
+        <option value="ace/mode/glsl">glsl</option>
+        <option value="ace/mode/golang">golang</option>
+        <option value="ace/mode/groovy">groovy</option>
+        <option value="ace/mode/haml">haml</option>
+        <option value="ace/mode/handlebars">handlebars</option>
+        <option value="ace/mode/haskell">haskell</option>
+        <option value="ace/mode/haxe">haxe</option>
+        <option value="ace/mode/html" selected>html</option>
+        <option value="ace/mode/html_ruby">html_ruby</option>
+        <option value="ace/mode/ini">ini</option>
+        <option value="ace/mode/jade">jade</option>
+        <option value="ace/mode/java">java</option>
+        <option value="ace/mode/javascript">javascript</option>
+        <option value="ace/mode/json">json</option>
+        <option value="ace/mode/jsoniq">jsoniq</option>
+        <option value="ace/mode/jsp">jsp</option>
+        <option value="ace/mode/jsx">jsx</option>
+        <option value="ace/mode/julia">julia</option>
+        <option value="ace/mode/latex">latex</option>
+        <option value="ace/mode/less">less</option>
+        <option value="ace/mode/liquid">liquid</option>
+        <option value="ace/mode/lisp">lisp</option>
+        <option value="ace/mode/livescript">livescript</option>
+        <option value="ace/mode/logiql">logiql</option>
+        <option value="ace/mode/lsl">lsl</option>
+        <option value="ace/mode/lua">lua</option>
+        <option value="ace/mode/luapage">luapage</option>
+        <option value="ace/mode/lucene">lucene</option>
+        <option value="ace/mode/makefile">makefile</option>
+        <option value="ace/mode/markdown">markdown</option>
+        <option value="ace/mode/matlab">matlab</option>
+        <option value="ace/mode/mushcode">mushcode</option>
+        <option value="ace/mode/mushcode_high_rules">mushcode_high_rules</option>
+        <option value="ace/mode/mysql">mysql</option>
+        <option value="ace/mode/objectivec">objectivec</option>
+        <option value="ace/mode/ocaml">ocaml</option>
+        <option value="ace/mode/pascal">pascal</option>
+        <option value="ace/mode/perl">perl</option>
+        <option value="ace/mode/pgsql">pgsql</option>
+        <option value="ace/mode/php">php</option>
+        <option value="ace/mode/powershell">powershell</option>
+        <option value="ace/mode/prolog">prolog</option>
+        <option value="ace/mode/properties">properties</option>
+        <option value="ace/mode/python">python</option>
+        <option value="ace/mode/r">r</option>
+        <option value="ace/mode/rdoc">rdoc</option>
+        <option value="ace/mode/rhtml">rhtml</option>
+        <option value="ace/mode/ruby">ruby</option>
+        <option value="ace/mode/rust">rust</option>
+        <option value="ace/mode/sass">sass</option>
+        <option value="ace/mode/scad">scad</option>
+        <option value="ace/mode/scala">scala</option>
+        <option value="ace/mode/scheme">scheme</option>
+        <option value="ace/mode/scss">scss</option>
+        <option value="ace/mode/sh">sh</option>
+        <option value="ace/mode/snippets">snippets</option>
+        <option value="ace/mode/sql">sql</option>
+        <option value="ace/mode/stylus">stylus</option>
+        <option value="ace/mode/svg">svg</option>
+        <option value="ace/mode/tcl">tcl</option>
+        <option value="ace/mode/tex">tex</option>
+        <option value="ace/mode/text">text</option>
+        <option value="ace/mode/textile">textile</option>
+        <option value="ace/mode/toml">toml</option>
+        <option value="ace/mode/twig">twig</option>
+        <option value="ace/mode/typescript">typescript</option>
+        <option value="ace/mode/vbscript">vbscript</option>
+        <option value="ace/mode/velocity">velocity</option>
+        <option value="ace/mode/verilog">verilog</option>
+        <option value="ace/mode/xml">xml</option>
+        <option value="ace/mode/xquery">xquery</option>
+        <option value="ace/mode/yaml">yaml</option>
+    </select> -->
+      <div id="editor">
+      </div>
+      <iframe id="ifrm" src="<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title of the document</title>
+  </head>
+
+  <body>
+
+  The content of the document......
+  </body>
+</html>" frameBorder="0"></iframe>
+
+
+      <script>
+      function update() {
+        var x = document.getElementById('ifrm');
+        x.srcdoc = editor.getValue();
+       // var idoc = x.contentDocument;
+       // idoc.open();
+       // idoc.write(editor.getValue());
+       // idoc.close();
+       //<iframe height="610px" width="100%" src="https://chiragkava.github.io/Project/Simulator-1/" title="Documents"/>
+      }
+      function setupEditor() {
+        //ace.require("ace/ext/language_tools");
+        window.editor = ace.edit("editor");
+        editor.getSession().setUseWorker(false);
+        editor.setOptions({
+          autoScrollEditorIntoView: true,
+          copyWithEmptySelection: false,
+          animatedScroll: true,
+          fontSize:16,
+          wrap:true,
+          enableBasicAutocompletion: true,
+          enableLiveAutocompletion: true,
+          enableSnippets: false,
+        });
+        editor.setTheme(document.getElementById('theme').value);
+        editor.session.setMode("ace/mode/html");
+        editor.setValue(`<!DOCTYPE html>
+  <html>
+    <head>
+      <title>Title of the document</title>
+    </head>
+
+    <body style="background:#2e3340;color:lightgray;font-size:18px">
+
+    The content of the document......
+    </body>
+  </html>`,1); // 1 = moves cursor to end
+          editor.getSession().on('change',function(){
+            $("#check").blur();
+            var x = document.getElementById('check');
+            if(x.checked == true)update();
+          });
+    }
+    $("#check").blur();
+      function ready() {
+        setupEditor();
+        update();
+      }
+      // $('#mode').on('change', function (ev) {
+      //     var mod = $('option:selected').attr('value');
+      //     //console.log(mod)
+      //     editor.session.setMode(mod);
+      // });
+      $('#theme').on('change', function (ev) {
+          var mode = $('option:selected').attr('value');
+          //console.log(mode)
+          editor.setTheme(mode);
+      });
+    </script>
+  </body>
+</html>

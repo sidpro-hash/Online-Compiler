@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <title>Online Compiler - Collegeek</title>
     <meta name="author" content="SidPro">
-    <meta name="description" content="Online C compiler: you can write your code and run cheers!">
+    <meta name="description" content="Online C,C++,JAVA,Python,Javascript compiler: you can write your code and run cheers!">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link type="text/css" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-themelist.min.js" integrity="sha512-5CwAfXQtNsk5OzybMAJ3U14TStTq6jUHJoWxu58KOyioLXO3fX6FPUKaYp/2iF6yZMkv38fvh3nH+Vq94R2BUg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-language_tools.min.js"></script>
@@ -16,7 +16,9 @@
   </head>
   <body onload="ready()">
     <div class="container">
-      <h1>Online Compiler</h1>
+      <h1>Online Compiler</h1> <!--  -->
+      <button title="Upload File" onclick="upload()" class="download-btn"><i class="fas fa-file-upload"></i></button>
+      <button title="Download Code" onclick="download()" class="download-btn"><i class="fa fa-download"></i></button>
       <div class="semicontainer">
         <div class="labeltheme">
           <!-- <label for="modes">Language :</label> -->
