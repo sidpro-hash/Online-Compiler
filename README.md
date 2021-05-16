@@ -1,7 +1,7 @@
 # Online-Compiler
 Online Compiler for C,C++,JAVA,Python,JavaScript. 
 [online compiler on Azure](http://collegeek-online-compiler.eastus.azurecontainer.io/) |
-[online-compiler on AWS](http://ec2-54-160-210-99.compute-1.amazonaws.com/)
+[online-compiler on AWS](http://ec2-34-236-158-169.compute-1.amazonaws.com/)
 
 ![Compiler Preview](compiler.gif)
 
