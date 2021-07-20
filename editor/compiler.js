@@ -75,7 +75,7 @@ function setupEditor() {
 	 });
 	 editor.commands.addCommand({
 	     name: "showKeyboardShortcuts",
-    	     bindKey: {win: "Ctrl-Alt-h", mac: "Command-Alt-h"},
+    	     bindKey: {win: 'Ctrl+Alt+h|Ctrl-Alt-h' , mac: 'Command-Alt-h'},
 	    exec: function(editor) {
 		config.loadModule("ace/ext/keybinding_menu", function(module) {
 		    module.init(editor);
