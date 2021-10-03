@@ -3,6 +3,9 @@ Online Compiler for C,C++,JAVA,Python,JavaScript.
 [online compiler on Azure](http://collegeek-online-compiler.eastus.azurecontainer.io/) |
 [online-compiler on AWS](http://ec2-54-82-89-25.compute-1.amazonaws.com/)
 
+
+[Separate Compiler on Heroku](https://cpp-collegeek.herokuapp.com/)
+
 ![Compiler Preview](compiler.gif)
 
 ## How to Run?
